@@ -1,0 +1,48 @@
+name: RAG Evaluation CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+
+    services:
+      # Khởi tạo Vector DB giả lập để test
+      qdrant:
+        image: qdrant/qdrant:latest
+        ports:
+          - 6333:6333
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ragas deepeval pytest
+
+      - name: Run RAG Evaluation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          QDRANT_HOST: localhost
+          QDRANT_PORT: 6333
+        run: |
+          # Chạy script đánh giá và xuất kết quả ra file markdown
+          python evaluation/run_eval.py --output report.md
+
+      - name: Post Evaluation Result to PR
+        if: github.event_name == 'pull_request'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: report.md
