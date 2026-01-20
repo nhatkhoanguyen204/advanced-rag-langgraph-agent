@@ -88,9 +88,9 @@ Chúng tôi đo lường hiệu quả trên tập dữ liệu mẫu thông qua n
 
 | Metric | Naive RAG | **Advanced Agentic RAG** |
 | --- | --- | --- |
-| **Faithfulness** | 0.62 | **0.91** |
-| **Answer Relevancy** | 0.58 | **0.88** |
-| **Context Precision** | 0.45 | **0.82** |
+| **Faithfulness** | | |
+| **Answer Relevancy** | | |
+| **Context Precision** | | |
 
 ## 🛡 License
 
