@@ -77,7 +77,3 @@ Hệ thống sẽ khởi chạy tại `localhost:8501` (Streamlit UI).
 ## 🛡 License
 
 Dự án được phát hành dưới bản quyền **MIT License**.
-
----
-
-**Bạn có muốn tôi đi sâu vào chi tiết cách viết file cấu hình `.github/workflows/eval.yml` để tự động chạy đánh giá mỗi khi bạn push code không?**
