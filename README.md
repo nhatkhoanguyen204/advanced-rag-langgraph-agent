@@ -58,8 +58,8 @@ Chúng tôi sử dụng khung đánh giá **RAGAS** để đo lường hiệu qu
 
 1. **Clone repository:**
 ```bash
-git clone https://github.com/nhatkhoanguyen204/advanced-rag.git
-cd advanced-rag
+git clone https://github.com/nhatkhoanguyen204/advanced-rag-langgraph-agent.git
+cd advanced-rag-langgraph-agent
 
 ```
 
