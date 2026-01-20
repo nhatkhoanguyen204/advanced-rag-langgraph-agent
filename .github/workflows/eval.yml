@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # Khởi tạo Vector DB giả lập để test
       qdrant:
         image: qdrant/qdrant:latest
         ports:
@@ -24,13 +23,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install ragas deepeval pytest
+          # Cài đặt cả main dependencies và nhóm eval (chứa ragas)
+          poetry install --with eval
 
       - name: Run RAG Evaluation
         env:
@@ -38,8 +42,9 @@ jobs:
           QDRANT_HOST: localhost
           QDRANT_PORT: 6333
         run: |
-          # Chạy script đánh giá và xuất kết quả ra file markdown
-          python evaluation/run_eval.py --output report.md
+          # Sử dụng 'poetry run' để chạy script trong môi trường ảo của poetry
+          # Lưu ý: run_eval.py nằm trong thư mục evaluation/
+          poetry run python evaluation/run_eval.py
 
       - name: Post Evaluation Result to PR
         if: github.event_name == 'pull_request'
